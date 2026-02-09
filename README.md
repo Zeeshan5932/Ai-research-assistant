@@ -19,13 +19,14 @@ An **agentic AI research assistant** built with **LangChain**, **FastAPI**, and 
 ## 🏗️ Project Architecture
 
 ```
-ai-research-assistant/
+frontend/
 │
-├── backend/              # FastAPI + LangChain agent
-│├── frontend/            # Streamlit app
-│├── data/                # PDFs & vector store
-│├── README.md
-│└── .env
+├── app.py                # Main Streamlit app
+├── api.py                # Backend API calls
+├── components.py         # UI helpers (chat bubbles etc.)
+├── requirements.txt      # Frontend dependencies
+└── config.py             # Backend URL
+
 ```
 ```
 ai-research-assistant/
