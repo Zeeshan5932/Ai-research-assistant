@@ -1,22 +1,58 @@
 from langchain_openai import ChatOpenAI
-from langchain.agents import initialize_agent, AgentType
+from langchain.agents.react.agent import create_react_agent
+from langchain.agents import AgentExecutor
+from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from agent.tools import get_tools
 from agent.memory import get_memory
-from agent.prompts import SYSTEM_PROMPT
+from dotenv import load_dotenv
+load_dotenv()
 
 def get_research_agent():
     llm = ChatOpenAI(
-        temperature=0,
-        model="gpt-4o-mini"
+        model="gpt-4o-mini",
+        temperature=0
     )
 
-    agent = initialize_agent(
-        tools=get_tools(),
+    tools = get_tools()
+    memory = get_memory()
+
+    # ✅ ReAct-style prompt (STABLE)
+    prompt = PromptTemplate.from_template(
+        """You are an AI research assistant that can search academic papers, summarize them, and provide citations.
+
+You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Question: {input}
+Thought:{agent_scratchpad}"""
+    )
+
+    agent = create_react_agent(
         llm=llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        memory=get_memory(),
-        verbose=True,
-        system_message=SYSTEM_PROMPT
+        tools=tools,
+        prompt=prompt
     )
 
-    return agent
+    executor = AgentExecutor(
+        agent=agent,
+        tools=tools,
+        memory=memory,
+        verbose=True,
+        handle_parsing_errors=True
+    )
+
+    return executor

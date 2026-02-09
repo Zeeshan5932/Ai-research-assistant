@@ -4,8 +4,11 @@ from services.search_service import search_arxiv
 def get_tools():
     return [
         Tool(
-            name="Search Arxiv",
-            func=lambda q: search_arxiv(q),
-            description="Search academic papers on Arxiv"
+            name="search_arxiv",
+            func=search_arxiv,
+            description=(
+                "Search academic papers on Arxiv. "
+                "Use this for research, literature review, and recent papers."
+            )
         )
     ]
