@@ -23,142 +23,143 @@ frontend/
 │
 ├── app.py                # Main Streamlit app
 ├── api.py                # Backend API calls
-├── components.py         # UI helpers (chat bubbles etc.)
-├── requirements.txt      # Frontend dependencies
-└── config.py             # Backend URL
+# 🧠 AI Research Assistant
+
+An agentic AI research assistant that searches, summarizes, and reasons over academic papers. Built with FastAPI (backend) and Streamlit (frontend), and designed for easy local development and extension (PDF RAG, citation support, vector search).
+
+---
+
+## 🚀 Features
+
+- Search academic papers (ArXiv)
+- Agentic reasoning workflows (LangChain)
+- Summarize papers and extract key insights
+- Conversational memory for multi-turn sessions
+- Pluggable vector store for retrieval (FAISS/others)
+- Streamlit chat UI and FastAPI backend
+
+---
+
+## 🏗️ Repository layout
 
 ```
-```
-ai-research-assistant/
-│
-├── backend/
+.
+├── backend/                # FastAPI backend, agents, services
 │   ├── app.py
 │   ├── config.py
 │   ├── requirements.txt
-│
-│   ├── agent/
-│   │   ├── research_agent.py
-│   │   ├── tools.py
-│   │   ├── memory.py
-│   │   └── prompts.py
-│
-│   ├── services/
-│   │   ├── search_service.py
-│   │   ├── pdf_service.py
-│   │   ├── vector_service.py
-│   │   └── citation_service.py
-│
-│   └── models/
-│       └── schemas.py
-│
-├── data/
-│   ├── papers/
-│   └── vector_store/
-│
-└── .env
+│   └── agent/
+│       ├── research_agent.py
+│       ├── tools.py
+│       ├── memory.py
+│       └── prompts.py
+├── frontend/               # Streamlit frontend (chat UI)
+│   ├── app.py
+│   ├── api.py
+│   ├── components.py
+│   ├── config.py
+│   └── requirements.txt
+├── models/                 # Pydantic schemas, DTOs
+│   └── schemas.py
+└── README.md
 ```
----
-
-## 🧠 Tech Stack
-
-### Backend
-
-* Python
-* FastAPI
-* LangChain
-* OpenAI / LLMs
-* FAISS (Vector DB)
-
-### Frontend
-
-* Streamlit
 
 ---
 
-## ⚙️ Setup Instructions
+## 🧰 Tech stack
 
-### 1️⃣ Clone Repository
+- Python 3.10+
+- FastAPI (backend)
+- Streamlit (frontend)
+- LangChain (agent workflows)
+- OpenAI or other LLM providers
+- FAISS or other vector stores for retrieval
+
+---
+
+## ⚙️ Quick setup (local)
+
+Prerequisites: Python 3.10+, git, and an OpenAI API key (or another LLM provider key).
+
+1. Clone the repo
 
 ```bash
 git clone <repo-url>
-cd ai-research-assistant
+cd Ai-research-assistant
 ```
 
----
+2. Create and activate a virtual environment (recommended)
 
-### 2️⃣ Backend Setup
+Windows (PowerShell):
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+macOS / Linux:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+3. Install backend dependencies and run the API
 
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn app:app --reload
+uvicorn app:app --reload --port 8000
 ```
 
-Backend will run at:
+The backend will be available at: http://127.0.0.1:8000
 
-```
-http://127.0.0.1:8000
-```
-
----
-
-### 3️⃣ Frontend Setup (Streamlit)
+4. Install frontend dependencies and run the Streamlit app
 
 ```bash
-cd frontend
+cd ../frontend
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Frontend will run at:
-
-```
-http://localhost:8501
-```
+The frontend will be available at: http://localhost:8501
 
 ---
 
-## 🔐 Environment Variables
+## 🔐 Environment variables
 
-Create a `.env` file in root directory:
+Create a `.env` file in the repository root (or set these in your environment):
 
-```env
+```
 OPENAI_API_KEY=your_openai_key_here
+BACKEND_URL=http://127.0.0.1:8000
 ```
 
----
-
-## 🧪 Example Usage
-
-Ask the assistant:
-
-* "Find recent papers on anomaly detection in finance"
-* "Summarize the latest research on fraud detection"
+Adjust other variables in `backend/config.py` or `frontend/config.py` as needed.
 
 ---
 
-## 📌 Future Enhancements
+## 🧪 Usage examples
 
-* 📄 PDF upload + RAG Q&A
-* 📊 Compare multiple papers
-* 📚 APA / IEEE citations
-* ☁️ Deployment (AWS / Azure)
+- Query: "Find recent papers on anomaly detection in finance"
+- Request a summary: "Summarize this paper and list limitations"
 
----
-
-## 🎓 Ideal For
-
-* Final Year Projects (FYP)
-* Research assistants
-* Consultants
-* AI portfolio projects
+Use the Streamlit UI for interactive querying, or call the FastAPI endpoints directly for integration.
 
 ---
 
-## 🏆 License
+## 🔭 Development notes
 
-MIT License
+- The `backend/agent` module contains agent logic and tools.
+- Services implementing search, PDF ingestion, and vector operations live in `backend/services`.
+- Add vector data under a `data/` folder if using local persistence.
 
 ---
 
-**Built with ❤️ using Agentic AI**
+## 📄 License
+
+MIT
+
+---
+
+Built with ❤️ — happy researching!
