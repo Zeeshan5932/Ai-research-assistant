@@ -27,7 +27,35 @@ ai-research-assistant/
 │├── README.md
 │└── .env
 ```
-
+```
+ai-research-assistant/
+│
+├── backend/
+│   ├── app.py
+│   ├── config.py
+│   ├── requirements.txt
+│
+│   ├── agent/
+│   │   ├── research_agent.py
+│   │   ├── tools.py
+│   │   ├── memory.py
+│   │   └── prompts.py
+│
+│   ├── services/
+│   │   ├── search_service.py
+│   │   ├── pdf_service.py
+│   │   ├── vector_service.py
+│   │   └── citation_service.py
+│
+│   └── models/
+│       └── schemas.py
+│
+├── data/
+│   ├── papers/
+│   └── vector_store/
+│
+└── .env
+```
 ---
 
 ## 🧠 Tech Stack
