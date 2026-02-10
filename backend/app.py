@@ -47,12 +47,9 @@ def upload_pdf(file: UploadFile = File(...)):
 @app.post("/search")
 
 def search_papers(req: SearchRequest):
-    papers = search_arxiv(req.query)
-
-    # Apply year filter
-    filtered = [
-        p for p in papers
-        if req.from_year <= p["year"] <= req.to_year
-    ]
-
-    return {"papers": filtered}
+    papers = search_arxiv(
+        query=req.query,
+        from_year=req.from_year,
+        to_year=req.to_year
+    )
+    return {"papers": papers}

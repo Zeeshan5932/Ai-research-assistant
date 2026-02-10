@@ -2,20 +2,22 @@ import requests
 from config import BACKEND_URL
 
 def search_papers(query, from_year, to_year):
-    return requests.post(
-        f"{BACKEND_URL}/search",
-        json={
-            "query": query,
-            "from_year": from_year,
-            "to_year": to_year
-        }
-    ).json()
+    payload = {
+        "query": query,
+        "from_year": int(from_year),
+        "to_year": int(to_year)
+    }
 
-def ask_agent(question):
-    return requests.post(
-        f"{BACKEND_URL}/ask",
-        json={"question": question}
-    ).json()
+    res = requests.post(
+        f"{BACKEND_URL}/search",
+        json=payload
+    )
+
+    if res.status_code != 200:
+        return {"error": res.text}
+
+    return res.json()
+
 
 def upload_pdf(pdf_file):
     files = {"file": pdf_file}
