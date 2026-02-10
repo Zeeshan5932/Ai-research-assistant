@@ -19,8 +19,13 @@ agent = get_research_agent()
 
 @app.post("/ask")
 def ask_question(req: QueryRequest):
-    result = agent.invoke({"input": req.question})
-    return {"answer": result["output"]}
+    # langgraph agents use .invoke() instead of .run()
+    result = agent.invoke({"messages": [("user", req.question)]})
+    # Extract the final message from the result
+    if result and "messages" in result:
+        final_message = result["messages"][-1]
+        return {"answer": final_message.content if hasattr(final_message, 'content') else str(final_message)}
+    return {"answer": str(result)}
 
 
 @app.post("/upload_pdf")
