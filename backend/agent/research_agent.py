@@ -74,15 +74,15 @@ except Exception:
 
 def get_research_agent():
     # Default to ChatOpenAI; swap to another LLM if you have one configured
-    llm = ChatOpenAI(
-        model="gpt-4o-mini",
-        temperature=0
-    )
-    
-    # llm = ChatGoogleGenerativeAI(
-    #     model="gemini-1.5-flash",
+    # llm = ChatOpenAI(
+    #     model="gpt-4o-mini",
     #     temperature=0
     # )
+    
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
+        temperature=0
+    )
 
     tools = get_tools()
     # memory = get_memory()
