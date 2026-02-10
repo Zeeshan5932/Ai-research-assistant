@@ -8,7 +8,8 @@ def get_tools():
             func=search_arxiv,
             description=(
                 "Search academic papers on Arxiv. "
-                "Use this for research, literature review, and recent papers."
+                "Use this when the user asks for research papers, literature reviews, or recent studies. "
+                "Return paper title, authors, year, summary, and PDF link."
             )
         )
     ]
