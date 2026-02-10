@@ -3,7 +3,7 @@ from pydantic import BaseModel
 class QueryRequest(BaseModel):
     question: str
 
-class SearchResult(BaseModel):
+class SearchRequest(BaseModel):
     title: str
     authors: list
     summary: str
