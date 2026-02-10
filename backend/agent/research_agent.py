@@ -16,6 +16,7 @@ def get_research_agent():
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
         memory=get_memory(),
         verbose=True,
+        handle_parsing_errors=True,   # ⭐ THIS FIX
         system_message=SYSTEM_PROMPT
     )
 
