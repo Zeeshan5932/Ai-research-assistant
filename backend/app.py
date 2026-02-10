@@ -1,7 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
 from services.pdf_service import load_pdf
 from services.vector_service import create_vector_store
-from models.schemas import QueryRequest
+from models.schemas import QueryRequest, SearchRequest
+from services.search_service import search_arxiv
 from agent.research_agent import get_research_agent
 import os
 import shutil
@@ -41,3 +42,17 @@ def upload_pdf(file: UploadFile = File(...)):
     create_vector_store(docs)
     
     return {"message": "PDF uploaded and processed successfully."}
+
+
+@app.post("/search")
+
+def search_papers(req: SearchRequest):
+    papers = search_arxiv(req.query)
+
+    # Apply year filter
+    filtered = [
+        p for p in papers
+        if req.from_year <= p["year"] <= req.to_year
+    ]
+
+    return {"papers": filtered}
