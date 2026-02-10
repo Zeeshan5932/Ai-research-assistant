@@ -44,7 +44,9 @@ An agentic AI research assistant that searches, summarizes, and reasons over aca
 
 ```
 .
-├── backend/                # FastAPI backend, agents, services
+# FastAPI backend, agents, services
+
+├── backend/                
 │   ├── app.py
 │   ├── config.py
 │   ├── requirements.txt
@@ -62,7 +64,7 @@ An agentic AI research assistant that searches, summarizes, and reasons over aca
 ├── models/                 # Pydantic schemas, DTOs
 │   └── schemas.py
 └── README.md
-```
+
 
 ---
 

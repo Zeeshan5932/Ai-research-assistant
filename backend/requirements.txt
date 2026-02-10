@@ -2,10 +2,8 @@ fastapi
 uvicorn
 python-dotenv
 
-langchain
-langchain-community
-langchain-openai
-langchain-text-splitters
+langchain==0.1.16
+langchain-openai==0.1.6
 
 faiss-cpu
 pypdf
