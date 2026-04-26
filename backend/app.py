@@ -65,15 +65,6 @@ agent = get_research_agent()
 
 @app.post("/ask")
 def ask_question(req: QueryRequest):
-    result = agent.invoke({"messages": [{"role": "user", "content": req.question}]})
-    messages = result.get("messages", []) if isinstance(result, dict) else []
-
-    if messages:
-        last_message = messages[-1]
-        answer = getattr(last_message, "content", None)
-        if answer is None and isinstance(last_message, dict):
-            answer = last_message.get("content", str(last_message))
-        return {"answer": answer}
-
-    return {"answer": str(result)}
+    response = agent.run(input=req.question)
+    return {"answer": response}
 

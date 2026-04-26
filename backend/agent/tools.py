@@ -1,10 +1,15 @@
-from services.search_service import search_arxiv
-
-
-def search_arxiv_tool(query: str):
-    """Search academic papers on Arxiv and return paper metadata."""
-    return search_arxiv(query)
-
-
 def get_tools():
-    return [search_arxiv_tool]
+    from langchain.tools import Tool
+    from services.search_service import search_arxiv
+
+    return [
+        Tool(
+            name="search_arxiv",
+            func=search_arxiv,
+            description=(
+                "Search academic papers on Arxiv. "
+                "Use this when the user asks for research papers, literature reviews, or recent studies. "
+                "Return paper title, authors, year, summary, and PDF link."
+            ),
+        )
+    ]

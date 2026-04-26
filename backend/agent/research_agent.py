@@ -24,8 +24,9 @@
 
 
 from langchain_openai import ChatOpenAI
-from langchain.agents import create_agent
+from langchain.agents import initialize_agent, AgentType
 from agent.tools import get_tools
+from agent.memory import get_memory
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -37,13 +38,12 @@ def get_research_agent():
     )
 
     tools = get_tools()
-
-    return create_agent(
-        model=llm,
+    return initialize_agent(
         tools=tools,
-        system_prompt=(
-            "You are an AI research assistant. You search academic papers, summarize "
-            "them, and provide citations when using information from a paper."
-        ),
+        llm=llm,
+        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+        memory=get_memory(),
+        verbose=True,
+        handle_parsing_errors=True,
     )
 
