@@ -24,36 +24,27 @@
 
 
 from langchain_openai import ChatOpenAI
+from langchain.agents import initialize_agent, AgentType
 from agent.tools import get_tools
 from agent.memory import get_memory
-from agent.prompts import SYSTEM_PROMPT
+from dotenv import load_dotenv
 
-
-try:
-    from langchain.agents import create_agent
-except Exception:
-    create_agent = None
-
-
-class _DummyAgent:
-    def invoke(self, *args, **kwargs):
-        raise RuntimeError(
-            "LangChain agent creation API not available.\n"
-            "Install a compatible LangChain version or update the code. "
-            "E.g., try `pip install 'langchain>=0.1.0,<0.1.100'` or adjust imports.`"
-        )
-
+load_dotenv()
 
 def get_research_agent():
     llm = ChatOpenAI(
-        model="gpt-4o-mini",
-        temperature=0
+        temperature=0,
+        model="gpt-4o-mini"
     )
 
-    tools = get_tools()
+    agent = initialize_agent(
+        tools=get_tools(),
+        llm=llm,
+        agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+        memory=get_memory(),
+        verbose=True,
+        handle_parsing_errors=True
+    )
 
-    if create_agent is not None:
-        agent = create_agent(llm=llm, tools=tools, memory=get_memory())
-        return agent
+    return agent
 
-    return _DummyAgent()
