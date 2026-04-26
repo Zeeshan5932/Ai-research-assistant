@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 from api import ask_agent
 from components import user_message, agent_message
 
@@ -18,8 +19,13 @@ question = st.text_input("Ask a research question:")
 
 if st.button("Ask") and question:
     st.session_state.chat.append(("user", question))
-    response = ask_agent(question)
-    st.session_state.chat.append(("agent", response["answer"]))
+    try:
+        response = ask_agent(question)
+        st.session_state.chat.append(("agent", response.get("answer", "No answer returned.")))
+    except requests.RequestException as exc:
+        st.session_state.chat.append(("agent", f"Request failed: {exc}"))
+    except Exception as exc:
+        st.session_state.chat.append(("agent", f"Unexpected error: {exc}"))
 
 st.divider()
 

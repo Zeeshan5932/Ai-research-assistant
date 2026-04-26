@@ -111,7 +111,7 @@ source .venv/bin/activate
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn app:app --reload --port 8000
+python -m uvicorn app:app --reload --port 8000
 ```
 
 The backend will be available at: http://127.0.0.1:8000
@@ -121,10 +121,12 @@ The backend will be available at: http://127.0.0.1:8000
 ```bash
 cd ../frontend
 pip install -r requirements.txt
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 The frontend will be available at: http://localhost:8501
+
+If you see a launcher error pointing to `Python310`, run Streamlit through the active virtual environment with `python -m streamlit run app.py` instead of the global `streamlit.exe` command.
 
 ---
 
