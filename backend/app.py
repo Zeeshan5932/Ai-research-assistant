@@ -65,6 +65,6 @@ agent = get_research_agent()
 
 @app.post("/ask")
 def ask_question(req: QueryRequest):
-    response = agent.run(input=req.question)
-    return {"answer": response}
+    result = agent.invoke({"input": req.question})
+    return {"answer": result["output"]}
 
