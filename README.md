@@ -74,7 +74,7 @@ An agentic AI research assistant that searches, summarizes, and reasons over aca
 - FastAPI (backend)
 - Streamlit (frontend)
 - LangChain (agent workflows)
-- OpenAI or other LLM providers
+- Google Gemini (LLM)
 - FAISS or other vector stores for retrieval
 
 ---
@@ -135,7 +135,7 @@ If you see a launcher error pointing to `Python310`, run Streamlit through the a
 Create a `.env` file in the repository root (or set these in your environment):
 
 ```
-OPENAI_API_KEY=your_openai_key_here
+GOOGLE_API_KEY=your_google_api_key_here
 BACKEND_URL=http://127.0.0.1:8000
 ```
 

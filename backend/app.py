@@ -56,6 +56,7 @@
 
 
 from fastapi import FastAPI
+from fastapi import HTTPException
 from models.schemas import QueryRequest
 from agent.research_agent import get_research_agent
 
@@ -65,6 +66,9 @@ agent = get_research_agent()
 
 @app.post("/ask")
 def ask_question(req: QueryRequest):
-    response = agent.run(input=req.question)
-    return {"answer": response}
+    try:
+        response = agent.run(input=req.question)
+        return {"answer": response}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
 
